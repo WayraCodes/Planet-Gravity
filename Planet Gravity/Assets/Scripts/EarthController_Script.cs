@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class EarthController_Script : MonoBehaviour
 {
-    private Transform Player;
+    private GameObject Player;
+    ArrayList AllObjects = new ArrayList();
     private bool PlayerInSight = false;
 
     private void Start()
     {
-        Player = GameObject.FindGameObjectWithTag("Player").transform;
+        AllObjects.Add (GameObject.FindGameObjectsWithTag("Asteroid"));
+        Player = GameObject.FindGameObjectWithTag("Player");
+        AllObjects.Add(Player);
+        
     }
 
     // Formula: F = G m1 m2 / r^2
@@ -18,18 +22,18 @@ public class EarthController_Script : MonoBehaviour
     {
         if (PlayerInSight)
         {
-            GravitationalPull();
+            GravitationalPull(AllObject);
         }
     }
 
-    void GravitationalPull()
+    void GravitationalPull(GameObject t)
     {
-        Vector3 Diference = transform.position - Player.transform.position;
+        Vector3 Diference = transform.position - t.gameObject.transform.position;
         float Distance = Diference.magnitude;
         Vector3 GravityDireccion = Diference.normalized;
-        float Gravity = 9.8f * (this.transform.localScale.x * Player.transform.localScale.x * 20) / (Distance * Distance);
+        float Gravity = 9.8f * (this.transform.localScale.x * t.transform.localScale.x * 20) / (Distance * Distance);
         Vector3 GravityVector = (GravityDireccion * Gravity);
-        Player.transform.GetComponent<Rigidbody2D>().AddForce(GravityVector, ForceMode2D.Force);
+        t.gameObject.transform.GetComponent<Rigidbody2D>().AddForce(GravityVector, ForceMode2D.Force);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
