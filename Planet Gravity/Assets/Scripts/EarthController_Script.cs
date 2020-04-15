@@ -5,15 +5,14 @@ using UnityEngine;
 public class EarthController_Script : MonoBehaviour
 {
     private GameObject Player;
-    ArrayList AllObjects = new ArrayList();
+    private GameObject[] AllObjects;
     private bool PlayerInSight = false;
+    private GameObject AsteroidAffected;
 
     private void Start()
     {
-        AllObjects.Add (GameObject.FindGameObjectsWithTag("Asteroid"));
-        Player = GameObject.FindGameObjectWithTag("Player");
-        AllObjects.Add(Player);
-        
+        AllObjects = GameObject.FindGameObjectsWithTag("Asteroid");
+        Player = GameObject.FindGameObjectWithTag("Player");        
     }
 
     // Formula: F = G m1 m2 / r^2
@@ -22,7 +21,15 @@ public class EarthController_Script : MonoBehaviour
     {
         if (PlayerInSight)
         {
-            GravitationalPull(AllObject);
+            GravitationalPull(Player);
+        }
+
+        foreach(GameObject Asteroid in AllObjects)
+        {
+            if (Asteroid == AsteroidAffected)
+            {
+                GravitationalPull(Asteroid);
+            }
         }
     }
 
@@ -42,6 +49,17 @@ public class EarthController_Script : MonoBehaviour
         {
             PlayerInSight = true;
         }
+
+        if (collision.CompareTag("Asteroid"))
+        {
+            foreach (GameObject Asteroid in AllObjects)
+            {
+                if (Asteroid == collision.gameObject)
+                {
+                    AsteroidAffected = collision.gameObject;
+                }
+            }
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -49,6 +67,14 @@ public class EarthController_Script : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             PlayerInSight = false;
+        }
+
+        if (collision.CompareTag("Asteroid"))
+        {
+            if (AsteroidAffected == collision.gameObject)
+            {
+                AsteroidAffected = null;
+            }
         }
     }
 }
