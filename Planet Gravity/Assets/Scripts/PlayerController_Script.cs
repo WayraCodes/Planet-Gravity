@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController_Script : MonoBehaviour
 {
@@ -14,21 +15,33 @@ public class PlayerController_Script : MonoBehaviour
     public GameObject Pivot;
     public Quaternion LastPivot;
 
+    // Slow motion
+    private float SlowMotion = 0.1f;
+    private float NormalMotion = 1f;
+
+    // References
+    GameController_Script GameScript;
+
     private void Start()
     {
         rb = this.GetComponent<Rigidbody2D>();
+        GameScript = FindObjectOfType<GameController_Script>();
     }
 
     private void FixedUpdate()
     {
         Movement();
         MovementRotation();
+        Testing();
     }
 
     void Movement()
     {
-        Direction = Vector3.up * -MovementJoystick.Vertical + Vector3.right * -MovementJoystick.Horizontal;
-        rb.AddForce(Direction * Speed, ForceMode2D.Force);
+        if (GameScript.IsPlayerDead == false)
+        {
+            Direction = Vector3.up * -MovementJoystick.Vertical + Vector3.right * -MovementJoystick.Horizontal;
+            rb.AddForce(Direction * Speed, ForceMode2D.Force);
+        }
     }
 
     void MovementRotation()
@@ -52,7 +65,47 @@ public class PlayerController_Script : MonoBehaviour
         if (collision.gameObject.CompareTag("Fuel"))
         {
             Destroy(collision.gameObject);
-            rb.AddForce(Direction * 1000f, ForceMode2D.Force);
+            StartCoroutine(FuelSlowMotion());
+            rb.AddForce(Direction * 5000f, ForceMode2D.Force);
+        }
+
+        if (collision.gameObject.CompareTag("Planet"))
+        {
+            PlayerDeathCollision();
+        }
+
+        if (collision.gameObject.CompareTag("Asteroid"))
+        {
+            Destroy(collision.gameObject);
+            PlayerDeathCollision();
+        }
+    }
+
+    void PlayerDeathCollision()
+    {
+        GameScript.IsPlayerDead = true;
+        MovementJoystick.gameObject.SetActive(false);
+        Destroy(this.gameObject);
+    }
+
+    IEnumerator FuelSlowMotion()
+    {
+        Debug.Log("Hello");
+        Time.timeScale = SlowMotion;
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;
+
+        yield return new WaitForSeconds(.1f);
+
+        Time.timeScale = NormalMotion;
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;
+    }
+
+    // Delete later...
+    void Testing()
+    {
+        if (Input.GetKey("r"))
+        {
+            SceneManager.LoadScene("PlayScene");
         }
     }
 }
