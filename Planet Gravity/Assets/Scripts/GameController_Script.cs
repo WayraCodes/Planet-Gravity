@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class GameController_Script : MonoBehaviour
 {
-    public bool IsPlayerDead = false;
+    [HideInInspector] public bool IsPlayerDead = false;
 }

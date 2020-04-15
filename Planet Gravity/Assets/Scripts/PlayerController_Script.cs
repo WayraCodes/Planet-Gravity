@@ -21,11 +21,13 @@ public class PlayerController_Script : MonoBehaviour
 
     // References
     GameController_Script GameScript;
+    CameraShakingController_Script CamShakeScript;
 
     private void Start()
     {
         rb = this.GetComponent<Rigidbody2D>();
         GameScript = FindObjectOfType<GameController_Script>();
+        CamShakeScript = FindObjectOfType<CameraShakingController_Script>();
     }
 
     private void FixedUpdate()
@@ -67,6 +69,7 @@ public class PlayerController_Script : MonoBehaviour
             Destroy(collision.gameObject);
             StartCoroutine(FuelSlowMotion());
             rb.AddForce(Direction * 5000f, ForceMode2D.Force);
+            CamShakeScript.shakeDuration = .05f;
         }
 
         if (collision.gameObject.CompareTag("Planet"))
@@ -94,7 +97,7 @@ public class PlayerController_Script : MonoBehaviour
         Time.timeScale = SlowMotion;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
 
-        yield return new WaitForSeconds(.1f);
+        yield return new WaitForSeconds(.01f);
 
         Time.timeScale = NormalMotion;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
