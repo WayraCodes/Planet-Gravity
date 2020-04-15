@@ -6,7 +6,7 @@ public class PlayerController_Script : MonoBehaviour
 {
     // Movement
     public Joystick MovementJoystick;
-    private float Speed = 10f;
+    private float Speed = 8f;
     private Rigidbody2D rb;
     private Vector3 Direction;
 
