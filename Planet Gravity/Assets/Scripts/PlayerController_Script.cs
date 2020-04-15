@@ -47,5 +47,12 @@ public class PlayerController_Script : MonoBehaviour
         }
     }
 
-
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Fuel"))
+        {
+            Destroy(collision.gameObject);
+            rb.AddForce(Direction * 1000f, ForceMode2D.Force);
+        }
+    }
 }

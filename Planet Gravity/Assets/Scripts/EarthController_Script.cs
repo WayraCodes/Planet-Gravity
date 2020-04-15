@@ -38,7 +38,7 @@ public class EarthController_Script : MonoBehaviour
         Vector3 Diference = transform.position - t.gameObject.transform.position;
         float Distance = Diference.magnitude;
         Vector3 GravityDireccion = Diference.normalized;
-        float Gravity = 9.8f * (this.transform.localScale.x * t.transform.localScale.x * 5) / (Distance * Distance);
+        float Gravity = 25f * (this.transform.localScale.x * t.transform.localScale.x) / (Distance * Distance);
         Vector3 GravityVector = (GravityDireccion * Gravity);
         t.gameObject.transform.GetComponent<Rigidbody2D>().AddForce(GravityVector, ForceMode2D.Force);
     }
