@@ -7,7 +7,7 @@ public class PlayerController_Script : MonoBehaviour
 {
     // Movement
     public Joystick MovementJoystick;
-    private float Speed = 8f;
+    [HideInInspector] public float Speed = 10f;
     private Rigidbody2D rb;
     private Vector3 Direction;
 
@@ -21,6 +21,10 @@ public class PlayerController_Script : MonoBehaviour
 
     // Death
     public GameObject ExplosionParticle;
+
+    // Sounds
+    public GameObject ExplosionS;
+    public GameObject FuelS;
 
     // References
     GameController_Script GameScript;
@@ -70,7 +74,8 @@ public class PlayerController_Script : MonoBehaviour
         {
             Destroy(collision.gameObject);
             StartCoroutine(FuelSlowMotion());
-            rb.AddForce(Direction * 5000f, ForceMode2D.Force);
+            rb.AddForce(Direction * 10000f, ForceMode2D.Force);
+            StartCoroutine(PlaySound(FuelS));
             CamShakeScript.shakeDuration = .05f;
         }
 
@@ -78,6 +83,7 @@ public class PlayerController_Script : MonoBehaviour
         {
             CamShakeScript.shakeDuration = .4f;
             Instantiate(ExplosionParticle, transform.position, Quaternion.identity);
+            StartCoroutine(PlaySound(ExplosionS));
             PlayerDeathCollision();
         }
 
@@ -86,6 +92,7 @@ public class PlayerController_Script : MonoBehaviour
             Destroy(collision.gameObject);
             CamShakeScript.shakeDuration = .3f;
             Instantiate(ExplosionParticle, transform.position, Quaternion.identity);
+            StartCoroutine(PlaySound(ExplosionS));
             PlayerDeathCollision();
         }
     }
@@ -99,7 +106,6 @@ public class PlayerController_Script : MonoBehaviour
 
     IEnumerator FuelSlowMotion()
     {
-        Debug.Log("Hello");
         Time.timeScale = SlowMotion;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
 
@@ -107,5 +113,12 @@ public class PlayerController_Script : MonoBehaviour
 
         Time.timeScale = NormalMotion;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
+    }
+
+    IEnumerator PlaySound(GameObject clip)
+    {
+        GameObject Audio = Instantiate(clip, transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(3);
+        Destroy(Audio);
     }
 }

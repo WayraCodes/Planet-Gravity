@@ -9,15 +9,19 @@ public class EarthController_Script : MonoBehaviour
     private GameObject[] AllObjects;
     private bool PlayerInSight = false;
     private GameObject AsteroidAffected;
+    private float OriginalPlayerSpeed;
 
     // References
     GameController_Script GameScript;
+    PlayerController_Script PlayerScript;
 
     private void Start()
     {
         AllObjects = GameObject.FindGameObjectsWithTag("Asteroid");
         Player = GameObject.FindGameObjectWithTag("Player");
         GameScript = FindObjectOfType<GameController_Script>();
+        PlayerScript = FindObjectOfType<PlayerController_Script>();
+        OriginalPlayerSpeed = PlayerScript.Speed;
     }
 
     // Formula: F = G m1 m2 / r^2
@@ -28,7 +32,7 @@ public class EarthController_Script : MonoBehaviour
         {
             if (GameScript.IsPlayerDead == false)
             {
-                GravitationalPull(Player, 1);
+                GravitationalPull(Player, 4f);
             }
         }
 
@@ -62,6 +66,7 @@ public class EarthController_Script : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             PlayerInSight = true;
+            PlayerScript.Speed = 14f;
         }
 
         if (collision.CompareTag("Asteroid"))
@@ -81,6 +86,7 @@ public class EarthController_Script : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             PlayerInSight = false;
+            PlayerScript.Speed = OriginalPlayerSpeed;
         }
 
         if (collision.CompareTag("Asteroid"))

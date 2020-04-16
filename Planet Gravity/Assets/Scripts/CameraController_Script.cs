@@ -25,9 +25,9 @@ public class CameraController_Script : MonoBehaviour
     {
         if (GameScript.IsPlayerDead == false)
         {
-            float posX = Mathf.SmoothDamp(transform.position.x, Player.transform.position.x + OffsetX, ref velocity.x, smoothTimeX);
+            //float posX = Mathf.SmoothDamp(transform.position.x, Player.transform.position.x + OffsetX, ref velocity.x, smoothTimeX);
             float posY = Mathf.SmoothDamp(transform.position.y, Player.transform.position.y + OffsetY, ref velocity.y, smoothTimeY);
-            transform.position = new Vector3(posX, posY, transform.position.z);
+            transform.position = new Vector3(transform.position.x, posY, transform.position.z);
         }
     }
 }
