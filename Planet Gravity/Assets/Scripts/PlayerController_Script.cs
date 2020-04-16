@@ -19,6 +19,9 @@ public class PlayerController_Script : MonoBehaviour
     private float SlowMotion = 0.1f;
     private float NormalMotion = 1f;
 
+    // Death
+    public GameObject ExplosionParticle;
+
     // References
     GameController_Script GameScript;
     CameraShakingController_Script CamShakeScript;
@@ -34,7 +37,6 @@ public class PlayerController_Script : MonoBehaviour
     {
         Movement();
         MovementRotation();
-        Testing();
     }
 
     void Movement()
@@ -74,12 +76,16 @@ public class PlayerController_Script : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Planet"))
         {
+            CamShakeScript.shakeDuration = .4f;
+            Instantiate(ExplosionParticle, transform.position, Quaternion.identity);
             PlayerDeathCollision();
         }
 
         if (collision.gameObject.CompareTag("Asteroid"))
         {
             Destroy(collision.gameObject);
+            CamShakeScript.shakeDuration = .3f;
+            Instantiate(ExplosionParticle, transform.position, Quaternion.identity);
             PlayerDeathCollision();
         }
     }
@@ -101,14 +107,5 @@ public class PlayerController_Script : MonoBehaviour
 
         Time.timeScale = NormalMotion;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
-    }
-
-    // Delete later...
-    void Testing()
-    {
-        if (Input.GetKey("r"))
-        {
-            SceneManager.LoadScene("PlayScene");
-        }
     }
 }

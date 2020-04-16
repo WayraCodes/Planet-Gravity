@@ -28,7 +28,7 @@ public class EarthController_Script : MonoBehaviour
         {
             if (GameScript.IsPlayerDead == false)
             {
-                GravitationalPull(Player);
+                GravitationalPull(Player, 1);
             }
         }
 
@@ -36,22 +36,25 @@ public class EarthController_Script : MonoBehaviour
         {
             if (Asteroid == AsteroidAffected)
             {
-                GravitationalPull(Asteroid);
+                GravitationalPull(Asteroid, 30f);
+                Debug.Log("Hello");
             }
         }
     }
 
-    void GravitationalPull(GameObject t)
+    void GravitationalPull(GameObject t, float multiplier)
     {
-        if (GameScript.IsPlayerDead == false)
-        {
-            Vector3 Diference = transform.position - t.gameObject.transform.position;
-            float Distance = Diference.magnitude;
-            Vector3 GravityDireccion = Diference.normalized;
-            float Gravity = 25f * (this.transform.localScale.x * t.transform.localScale.x) / (Distance * Distance);
-            Vector3 GravityVector = (GravityDireccion * Gravity);
-            t.gameObject.transform.GetComponent<Rigidbody2D>().AddForce(GravityVector, ForceMode2D.Force);
-        }
+        
+            if (GameScript.IsPlayerDead == false)
+            {
+                Vector3 Diference = transform.position - t.gameObject.transform.position;
+                float Distance = Diference.magnitude;
+                Vector3 GravityDireccion = Diference.normalized;
+                float Gravity = 25f * (this.transform.localScale.x * t.transform.localScale.x * multiplier) / (Distance * Distance);
+                Vector3 GravityVector = (GravityDireccion * Gravity);
+                t.gameObject.transform.GetComponent<Rigidbody2D>().AddForce(GravityVector, ForceMode2D.Force);
+            }
+        
     }
 
     private void OnTriggerStay2D(Collider2D collision)
