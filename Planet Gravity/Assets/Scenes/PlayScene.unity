@@ -303,6 +303,9 @@ MonoBehaviour:
   IsPlayerDead: 0
   PlanetNumber: 0
   Planets: []
+  Asteroid: {fileID: 8180847042979192946, guid: d70e6802daf9a4ebca8b604e7d992dea,
+    type: 3}
+  AsteroidNumber: 0
 --- !u!4 &709869665
 Transform:
   m_ObjectHideFlags: 0

@@ -16,17 +16,13 @@ public class AsteroidController_Script : MonoBehaviour
 
     // References
     CameraShakingController_Script CamShakeScript;
-    GameController_Script GameScript;
 
     private void Start()
     {
         rb = this.GetComponent<Rigidbody2D>();
         Rand1 = Random.Range(-1, 2);
         Rand2 = Random.Range(-1, 2);
-        Debug.Log(Rand1 + " " + Rand2);
         CamShakeScript = FindObjectOfType<CameraShakingController_Script>();
-        GameScript = FindObjectOfType<GameController_Script>();
-        GameScript.AsteroidNumber += 1;
     }
 
     private void FixedUpdate()

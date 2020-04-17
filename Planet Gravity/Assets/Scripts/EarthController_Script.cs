@@ -26,6 +26,11 @@ public class EarthController_Script : MonoBehaviour
 
     // Formula: F = G m1 m2 / r^2
 
+    private void Update()
+    {
+        AllObjects = GameObject.FindGameObjectsWithTag("Asteroid");
+    }
+
     private void FixedUpdate()
     {
         if (PlayerInSight)
@@ -41,7 +46,6 @@ public class EarthController_Script : MonoBehaviour
             if (Asteroid == AsteroidAffected)
             {
                 GravitationalPull(Asteroid, 30f);
-                Debug.Log("Hello");
             }
         }
     }

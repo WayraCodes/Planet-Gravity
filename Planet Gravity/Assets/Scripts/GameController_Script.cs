@@ -24,6 +24,7 @@ public class GameController_Script : MonoBehaviour
     // Asteroid Generation
     public GameObject Asteroid;
     [HideInInspector] public int AsteroidNumber;
+    private bool HasFinished = true;
 
     // References
     private GameObject Player;
@@ -41,20 +42,14 @@ public class GameController_Script : MonoBehaviour
 
     void AsteroidSpawning()
     {
-        int PosX = Random.Range(-15, 16);
-        float PosY = Random.Range(Player.transform.position.y + 15.3f, Player.transform.position.y + 22f);
-        Vector3 FinalTransform = new Vector3(PosX, PosY, 0f);
         while (AsteroidNumber < PlanetNumber * 2)
         {
-            float RandomRange = Random.Range(1, 6);
-            StartCoroutine(RandomTimeAsteroid(RandomRange, FinalTransform));
+            AsteroidNumber += 1;
+            int PosX = Random.Range(-15, 16);
+            float PosY = Random.Range(Player.transform.position.y + 15.3f, Player.transform.position.y + 22f);
+            Vector3 FinalTransform = new Vector3(PosX, PosY, 0f);
+            Instantiate(Asteroid, FinalTransform, Quaternion.identity);
         }
-    }
-
-    IEnumerator RandomTimeAsteroid(float Random, Vector3 ZehTransform)
-    {
-        yield return new WaitForSeconds(Random);
-        Instantiate(Asteroid, ZehTransform, Quaternion.identity);
     }
 
     void Testing()
