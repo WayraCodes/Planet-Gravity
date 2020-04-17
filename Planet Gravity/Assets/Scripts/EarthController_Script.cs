@@ -11,20 +11,28 @@ public class EarthController_Script : MonoBehaviour
     private GameObject AsteroidAffected;
     private float OriginalPlayerSpeed;
 
+    // Orb Spawner
+    public GameObject R;
+    public GameObject L;
+    public GameObject T;
+    public GameObject B;
+    private int SelectionNumber;
+
     // References
     GameController_Script GameScript;
     PlayerController_Script PlayerScript;
+    public GameObject Orb;
 
     private void Start()
     {
+        SelectionNumber = Random.Range(1, 6);
         AllObjects = GameObject.FindGameObjectsWithTag("Asteroid");
         Player = GameObject.FindGameObjectWithTag("Player");
         GameScript = FindObjectOfType<GameController_Script>();
         PlayerScript = FindObjectOfType<PlayerController_Script>();
         OriginalPlayerSpeed = PlayerScript.Speed;
+        OrbSpawner();
     }
-
-    // Formula: F = G m1 m2 / r^2
 
     private void Update()
     {
@@ -47,6 +55,27 @@ public class EarthController_Script : MonoBehaviour
             {
                 GravitationalPull(Asteroid, 30f);
             }
+        }
+    }
+
+    void OrbSpawner ()
+    {
+        switch(SelectionNumber)
+        {
+            case 1:
+                Instantiate(Orb, R.gameObject.transform.position, Quaternion.identity);
+                break;
+            case 2:
+                Instantiate(Orb, L.gameObject.transform.position, Quaternion.identity);
+                break;
+            case 3:
+                Instantiate(Orb, T.gameObject.transform.position, Quaternion.identity);
+                break;
+            case 4:
+                Instantiate(Orb, B.gameObject.transform.position, Quaternion.identity);
+                break;
+            case 5:
+                break;
         }
     }
 

@@ -25,6 +25,9 @@ public class GameController_Script : MonoBehaviour
     public GameObject Asteroid;
     [HideInInspector] public int AsteroidNumber;
     private bool HasFinished = true;
+    private int NumberToSpawn = 2;
+    private bool Started = false;
+    private bool Started2 = false;
 
     // References
     private GameObject Player;
@@ -38,17 +41,53 @@ public class GameController_Script : MonoBehaviour
     {
         Planets = GameObject.FindGameObjectsWithTag("TUP");
         Testing(); AsteroidSpawning();
+        if (!Started)
+        {
+            StartCoroutine(NumIncrement());
+        }
     }
 
     void AsteroidSpawning()
     {
-        while (AsteroidNumber < PlanetNumber * 2)
+        while (AsteroidNumber < NumberToSpawn)
         {
-            AsteroidNumber += 1;
-            int PosX = Random.Range(-15, 16);
-            float PosY = Random.Range(Player.transform.position.y + 15.3f, Player.transform.position.y + 22f);
-            Vector3 FinalTransform = new Vector3(PosX, PosY, 0f);
-            Instantiate(Asteroid, FinalTransform, Quaternion.identity);
+            if (IsPlayerDead == false)
+            {
+                Debug.Log(AsteroidNumber);
+                Debug.Log(NumberToSpawn);
+                AsteroidNumber += 1;
+                int PosX = Random.Range(-15, 16);
+                float PosY = Random.Range(Player.transform.position.y + 15.3f, Player.transform.position.y + 22f);
+                Vector3 FinalTransform = new Vector3(PosX, PosY, 0f);
+                Instantiate(Asteroid, FinalTransform, Quaternion.identity);
+            }
+        }
+
+        if (AsteroidNumber == NumberToSpawn)
+        {
+            if (Started2 == false)
+            {
+                StartCoroutine(WaitNum());
+            }
+        }
+    }
+
+    IEnumerator WaitNum ()
+    {
+        Started2 = true;
+        yield return new WaitForSeconds(10);
+        AsteroidNumber = 0;
+        Started2 = false;
+    }
+
+    IEnumerator NumIncrement()
+    {
+        while (true)
+        {
+            Started = true;
+            yield return new WaitForSeconds(5);
+            NumberToSpawn += 1;
+            Started = false;
         }
     }
 

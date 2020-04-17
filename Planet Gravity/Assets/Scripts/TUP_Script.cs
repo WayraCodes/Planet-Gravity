@@ -24,8 +24,6 @@ public class TUP_Script : MonoBehaviour
             {
                 foreach (GameObject Planet in GameScript.Planets)
                 {
-                    Debug.Log("Hedwe");
-
                     if (Planet.transform.position.y < transform.position.y - 1f)
                     {
                         Destroy(Planet.gameObject);
