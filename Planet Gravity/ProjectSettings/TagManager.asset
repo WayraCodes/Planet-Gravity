@@ -9,6 +9,7 @@ TagManager:
   - Planet
   - BarrierL
   - BarrierR
+  - TUP
   layers:
   - Default
   - TransparentFX

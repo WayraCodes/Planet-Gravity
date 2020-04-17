@@ -5,10 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class GameController_Script : MonoBehaviour
 {
+    // Player
     [HideInInspector] public bool IsPlayerDead = false;
+
+    // Planet Generation
+    public int PlanetNumber = 0;
+    public GameObject[] Planets;
 
     private void Update()
     {
+        Planets = GameObject.FindGameObjectsWithTag("TUP");
         Testing();
     }
 

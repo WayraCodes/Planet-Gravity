@@ -82,8 +82,8 @@ public class PlayerController_Script : MonoBehaviour
         if (collision.gameObject.CompareTag("Planet"))
         {
             CamShakeScript.shakeDuration = .4f;
-            Instantiate(ExplosionParticle, transform.position, Quaternion.identity);
             StartCoroutine(PlaySound(ExplosionS));
+            Instantiate(ExplosionParticle, transform.position, Quaternion.identity);
             PlayerDeathCollision();
         }
 
