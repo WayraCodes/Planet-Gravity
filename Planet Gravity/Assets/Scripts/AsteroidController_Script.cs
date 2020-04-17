@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class AsteroidController_Script : MonoBehaviour
 {
+    // Movement
     private float Speed = .2f;
     private Rigidbody2D rb;
+
+    // Random Direction
     private int Rand1;
     private int Rand2;
     private Vector3 Direction;
@@ -13,6 +16,7 @@ public class AsteroidController_Script : MonoBehaviour
 
     // References
     CameraShakingController_Script CamShakeScript;
+    GameController_Script GameScript;
 
     private void Start()
     {
@@ -21,6 +25,8 @@ public class AsteroidController_Script : MonoBehaviour
         Rand2 = Random.Range(-1, 2);
         Debug.Log(Rand1 + " " + Rand2);
         CamShakeScript = FindObjectOfType<CameraShakingController_Script>();
+        GameScript = FindObjectOfType<GameController_Script>();
+        GameScript.AsteroidNumber += 1;
     }
 
     private void FixedUpdate()
