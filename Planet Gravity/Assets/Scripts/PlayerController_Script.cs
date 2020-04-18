@@ -111,7 +111,7 @@ public class PlayerController_Script : MonoBehaviour
     {
         GameScript.IsPlayerDead = true;
         MovementJoystick.gameObject.SetActive(false);
-        Destroy(this.gameObject);
+        this.gameObject.SetActive(false);
     }
 
     IEnumerator FuelSlowMotion()

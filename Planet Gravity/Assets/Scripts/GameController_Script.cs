@@ -24,10 +24,14 @@ public class GameController_Script : MonoBehaviour
     // Asteroid Generation
     public GameObject Asteroid;
     [HideInInspector] public int AsteroidNumber;
+    private GameObject[] Asteroids;
     private bool HasFinished = true;
     private int NumberToSpawn = 2;
     private bool Started = false;
     private bool Started2 = false;
+
+    // DeathScreen
+    public GameObject DeathScreen;
 
     // References
     private GameObject Player;
@@ -35,26 +39,40 @@ public class GameController_Script : MonoBehaviour
     private void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
+        Asteroids = GameObject.FindGameObjectsWithTag("Asteroid");
     }
 
     private void Update()
     {
         Planets = GameObject.FindGameObjectsWithTag("TUP");
-        Testing(); AsteroidSpawning();
-        if (!Started)
+        Testing();
+        if (IsPlayerDead == false)
         {
-            StartCoroutine(NumIncrement());
+            AsteroidSpawning();
+            if (!Started)
+            {
+                StartCoroutine(NumIncrement());
+            }
+        }
+        TriggerDeathScreen();
+    }
+
+    // Death Screen
+    void TriggerDeathScreen()
+    {
+        if (IsPlayerDead)
+        {
+            DeathScreen.gameObject.SetActive(true);
         }
     }
 
+    // Asteroids
     void AsteroidSpawning()
     {
         while (AsteroidNumber < NumberToSpawn)
         {
             if (IsPlayerDead == false)
             {
-                Debug.Log(AsteroidNumber);
-                Debug.Log(NumberToSpawn);
                 AsteroidNumber += 1;
                 int PosX = Random.Range(-15, 16);
                 float PosY = Random.Range(Player.transform.position.y + 15.3f, Player.transform.position.y + 22f);
@@ -70,6 +88,14 @@ public class GameController_Script : MonoBehaviour
                 StartCoroutine(WaitNum());
             }
         }
+
+        foreach (GameObject Astro in Asteroids)
+        {
+            if (Astro.transform.position.y < Player.transform.position.y - 11f)
+            {
+                Destroy(Astro.gameObject);
+            }
+        }
     }
 
     IEnumerator WaitNum ()
@@ -79,7 +105,6 @@ public class GameController_Script : MonoBehaviour
         AsteroidNumber = 0;
         Started2 = false;
     }
-
     IEnumerator NumIncrement()
     {
         while (true)

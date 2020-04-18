@@ -18,6 +18,11 @@ public class EarthController_Script : MonoBehaviour
     public GameObject B;
     private int SelectionNumber;
 
+    // Planet Selection
+    public SpriteRenderer CenterSprite;
+    public Sprite[] Planets;
+    private int RandomPlanet;
+
     // References
     GameController_Script GameScript;
     PlayerController_Script PlayerScript;
@@ -32,7 +37,9 @@ public class EarthController_Script : MonoBehaviour
         PlayerScript = FindObjectOfType<PlayerController_Script>();
         OriginalPlayerSpeed = PlayerScript.Speed;
         OrbSpawner();
-    }
+        RandomPlanet = Random.Range(1, Planets.Length);
+        CenterSprite.sprite = Planets[RandomPlanet];
+     }
 
     private void Update()
     {
@@ -45,7 +52,7 @@ public class EarthController_Script : MonoBehaviour
         {
             if (GameScript.IsPlayerDead == false)
             {
-                GravitationalPull(Player, 4f);
+                GravitationalPull(Player, 2f);
             }
         }
 
@@ -81,7 +88,6 @@ public class EarthController_Script : MonoBehaviour
 
     void GravitationalPull(GameObject t, float multiplier)
     {
-        
             if (GameScript.IsPlayerDead == false)
             {
                 Vector3 Diference = transform.position - t.gameObject.transform.position;
