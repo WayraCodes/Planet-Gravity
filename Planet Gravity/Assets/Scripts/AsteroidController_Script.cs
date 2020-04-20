@@ -14,6 +14,9 @@ public class AsteroidController_Script : MonoBehaviour
     private Vector3 Direction;
     public bool IsAlive = true;
 
+    // Rotation
+    private int RandRotation;
+
     // References
     CameraShakingController_Script CamShakeScript;
 
@@ -23,11 +26,13 @@ public class AsteroidController_Script : MonoBehaviour
         Rand1 = Random.Range(-1, 2);
         Rand2 = Random.Range(-1, 2);
         CamShakeScript = FindObjectOfType<CameraShakingController_Script>();
+        RandRotation = Random.Range(2, 90);
     }
 
     private void FixedUpdate()
     {
         Movement();
+        Rotation();
     }
 
     void Movement()
@@ -39,6 +44,11 @@ public class AsteroidController_Script : MonoBehaviour
 
         Direction = Vector3.up * Rand1 + Vector3.right * Rand2;
         rb.velocity = Direction * Speed;
+    }
+
+    void Rotation()
+    {
+        this.transform.Rotate(new Vector3(0, 0, RandRotation) * Time.deltaTime);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

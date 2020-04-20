@@ -26,6 +26,9 @@ public class PlayerController_Script : MonoBehaviour
     public GameObject ExplosionS;
     public GameObject FuelS;
 
+    // Respawn
+    ParticleSystem PS;
+
     // References
     GameController_Script GameScript;
     CameraShakingController_Script CamShakeScript;
@@ -35,12 +38,19 @@ public class PlayerController_Script : MonoBehaviour
         rb = this.GetComponent<Rigidbody2D>();
         GameScript = FindObjectOfType<GameController_Script>();
         CamShakeScript = FindObjectOfType<CameraShakingController_Script>();
+        PS = GetComponent<ParticleSystem>();
     }
 
     private void FixedUpdate()
     {
-        Movement();
-        MovementRotation();
+        if (MovementJoystick.Vertical * MovementJoystick.Horizontal != 0)
+        {
+            GameScript.HasPlayerStarted = true;
+            var Emissions = PS.emission;
+            Emissions.rateOverTime = 0;
+            Movement();
+            MovementRotation();
+        }
     }
 
     void Movement()

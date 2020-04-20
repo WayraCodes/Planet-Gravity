@@ -16,6 +16,7 @@ public class GameController_Script : MonoBehaviour
 {
     // Player
     [HideInInspector] public bool IsPlayerDead = false;
+    [HideInInspector] public bool HasPlayerStarted = false;
 
     // Planet Generation
     [HideInInspector] public int PlanetNumber = 0;
@@ -46,7 +47,7 @@ public class GameController_Script : MonoBehaviour
     {
         Planets = GameObject.FindGameObjectsWithTag("TUP");
         Testing();
-        if (IsPlayerDead == false)
+        if (IsPlayerDead == false && HasPlayerStarted == true)
         {
             AsteroidSpawning();
             if (!Started)
