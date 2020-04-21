@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 // 0, -0.75, 0
@@ -37,6 +38,10 @@ public class GameController_Script : MonoBehaviour
     // References
     private GameObject Player;
 
+    // Score
+    public Text Score;
+    public int ScoreInt = 0;
+
     private void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
@@ -45,6 +50,7 @@ public class GameController_Script : MonoBehaviour
 
     private void Update()
     {
+        Score.text = "" + ScoreInt;
         Planets = GameObject.FindGameObjectsWithTag("TUP");
         Testing();
         if (IsPlayerDead == false && HasPlayerStarted == true)
