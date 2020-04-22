@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering.PostProcessing;
 
 // 0, -0.75, 0
 // 0, -16.04, 0
@@ -32,9 +33,6 @@ public class GameController_Script : MonoBehaviour
     private bool Started = false;
     private bool Started2 = false;
 
-    // DeathScreen
-    public GameObject DeathScreen;
-
     // References
     private GameObject Player;
 
@@ -42,10 +40,19 @@ public class GameController_Script : MonoBehaviour
     public Text Score;
     public int ScoreInt = 0;
 
+    // DeathScreen
+    public GameObject DeathScreen;
+
+    // Music
+    private GameObject MusicAnimator;
+    Animator AniMu;
+
     private void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
         Asteroids = GameObject.FindGameObjectsWithTag("Asteroid");
+        MusicAnimator = GameObject.FindGameObjectWithTag("Music");
+        AniMu = MusicAnimator.GetComponent<Animator>();
     }
 
     private void Update()
@@ -61,15 +68,11 @@ public class GameController_Script : MonoBehaviour
                 StartCoroutine(NumIncrement());
             }
         }
-        TriggerDeathScreen();
-    }
 
-    // Death Screen
-    void TriggerDeathScreen()
-    {
         if (IsPlayerDead)
         {
-            DeathScreen.gameObject.SetActive(true);
+            AniMu.SetBool("IsExiting", true);
+            DeathScreen.SetActive(true);
         }
     }
 
@@ -82,7 +85,7 @@ public class GameController_Script : MonoBehaviour
             {
                 AsteroidNumber += 1;
                 int PosX = Random.Range(-15, 16);
-                float PosY = Random.Range(Player.transform.position.y + 15.3f, Player.transform.position.y + 22f);
+                float PosY = Random.Range(Player.transform.position.y + 21.76f, Player.transform.position.y + 37.75f);
                 Vector3 FinalTransform = new Vector3(PosX, PosY, 0f);
                 Instantiate(Asteroid, FinalTransform, Quaternion.identity);
             }

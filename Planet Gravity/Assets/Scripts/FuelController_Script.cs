@@ -14,6 +14,8 @@ public class FuelController_Script : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            GameScript.Score.gameObject.SetActive(false);
+            GameScript.Score.gameObject.SetActive(true);
             GameScript.ScoreInt += 3;
         }
     }

@@ -22,9 +22,13 @@ public class BufferZone_Script : MonoBehaviour
                 switch (IsOuterLayer)
                 {
                     case true:
+                        GameScript.Score.gameObject.SetActive(false);
+                        GameScript.Score.gameObject.SetActive(true);
                         GameScript.ScoreInt += 1;
                         break;
                     case false:
+                        GameScript.Score.gameObject.SetActive(false);
+                        GameScript.Score.gameObject.SetActive(true);
                         GameScript.ScoreInt += 1;
                         break;
                 }

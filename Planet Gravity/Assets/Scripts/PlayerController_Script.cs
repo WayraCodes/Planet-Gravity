@@ -109,12 +109,12 @@ public class PlayerController_Script : MonoBehaviour
 
         if (collision.gameObject.CompareTag("BarrierL"))
         {
-            transform.position = new Vector3 (15.92f, transform.position.y, 0f);
+            transform.position = new Vector3 (11.3f, transform.position.y, 0f);
         }
 
         if (collision.gameObject.CompareTag("BarrierR"))
         {
-            transform.position = new Vector3(-15.92f, transform.position.y, 0f);
+            transform.position = new Vector3(-11.3f, transform.position.y, 0f);
         }
     }
 
